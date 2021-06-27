@@ -37,12 +37,15 @@ def login_view(request):
             return render(request,"Shifts/login.html",{
                 "message": "Invalid Input."
             })
-            
+
     return render(request,"Shifts/login.html")
 
 
 def logout_view(request):
-    pass
+    logout(request)
+    return render(request,"Shifts/login.html",{
+        "message":"Logged out."
+    })
 
 
 def addshift (request):
