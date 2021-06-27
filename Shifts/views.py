@@ -1,9 +1,9 @@
 
 from django.contrib.auth import authenticate,login,logout
-from django.http.response import  HttpResponseRedirect
+
 from django.shortcuts import redirect, render
 from django import forms
-
+from django.contrib.auth.decorators import login_required
 
 
 class NewShiftForm(forms.Form):
@@ -48,6 +48,7 @@ def logout_view(request):
     })
 
 
+@login_required(login_url="Shifts:login")
 def addshift (request):
     return render(request,"Shifts/addshift.html",{
         "form": NewShiftForm()
