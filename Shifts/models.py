@@ -1,9 +1,12 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.conf import settings
 
 # Create your models here.
 
 class shiftSubmitTwo(models.Model):
+    #on delete of user i still want to keep the old user shifts
+    userName = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="shift_submitter", on_delete=models.DO_NOTHING)
     sundayFirst = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(3)])
     sundaySecond= models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(3)])
     mondayFirst = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(3)])

@@ -1,5 +1,6 @@
 from django import forms
-
+from django.forms import ModelForm
+from Shifts.models import shiftSubmitTwo
 
 class NewShiftForm(forms.Form):
     sunday=forms.IntegerField(label="Sunday",min_value=0,max_value=3)
@@ -15,3 +16,7 @@ class NewShiftForm(forms.Form):
 
 days= ["Sunday" , "Monday" , "Tuesday","wednesday","thursday"]
 
+class shiftSubmitTwoForm (ModelForm):
+    class Meta:
+        model = shiftSubmitTwo
+        fields = '__all__'
