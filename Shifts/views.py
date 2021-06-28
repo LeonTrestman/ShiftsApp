@@ -1,6 +1,5 @@
 
 from django.contrib.auth import authenticate,login,logout
-
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from . import forms 
@@ -40,6 +39,16 @@ def logout_view(request):
 
 @login_required(login_url="Shifts:login")
 def addshift (request):
+
+    if request.method == "POST":
+        form = forms.shiftSubmitTwoForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+             return render(request,"Shifts/addshift.html",{
+                 "form": form
+              })
+
     return render(request,"Shifts/addshift.html",{
         "form": forms.shiftSubmitTwoForm()
     })
