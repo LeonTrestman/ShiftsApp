@@ -7,12 +7,23 @@
     {% endif %}
 
     
-    <form action="{% url 'Shifts:login' %}" method="post">
+    <form action="{% url 'Shifts:login' %}" method="post" id="loginform">
          {% csrf_token %}
-        <input type ="text" name="username" placeholder= "username">
+        <input type ="text" id="username" name="username" placeholder= "username">
         <input type="password" name="password" placeholder="password">
         <input type = "submit" value = "Login">
     </form>
-    
 
+    <!-- button for displaying name in form here 
+        
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            document.querySelector('#loginform').onsubmit= function(){
+                const username = document.querySelector('#username').value;
+                alert(`hello, ${username}`)
+            };
+        });
+    </script>
+
+    -->
 {% endblock %}

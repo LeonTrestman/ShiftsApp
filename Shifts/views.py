@@ -28,6 +28,7 @@ def login_view(request):
             })
 
     return render(request,"Shifts/login.html")
+    
 
 
 def logout_view(request):
