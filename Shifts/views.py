@@ -43,8 +43,13 @@ def addshift (request):
 
     if request.method == "POST":
         form = forms.shiftSubmitTwoForm(request.POST)
+        
+
         if form.is_valid():
-            form.save()
+            #adding user into the model 
+            portfolio = form.save(commit=False) 
+            portfolio.userName  = request.user
+            portfolio.save() 
         else:
              return render(request,"Shifts/addshift.html",{
                  "form": form
