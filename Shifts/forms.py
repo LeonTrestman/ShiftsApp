@@ -19,4 +19,4 @@ days= ["Sunday" , "Monday" , "Tuesday","wednesday","thursday"]
 class shiftSubmitTwoForm (ModelForm):
     class Meta:
         model = shiftSubmitTwo
-        exclude = ['userName']
+        exclude = ['user_name']

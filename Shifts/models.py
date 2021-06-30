@@ -5,33 +5,34 @@ from django.conf import settings
 # Create your models here.
 
 class shiftSubmitTwo(models.Model):
-
+    
     #values for avilability 
     minvalshift = 0
     maxvalshift = 3
 
     #on delete of user i still want to keep the old user shifts
-    userName = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="shift_submitter", on_delete=models.DO_NOTHING)
-    sundayFirst = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    sundaySecond= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    mondayFirst = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    mondaySecond= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    tuesdayFirst = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    tuesdaySecond= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    wednesdayFirst = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    wednesdaySecond= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    thursdayFirst = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    thursdaySecond= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    fridayFirst = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    fridaySecond= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    saturdayFirst = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
-    saturdaySecond= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    user_name = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="shift_submitter", on_delete=models.DO_NOTHING)
+    sunday_first = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    sunday_second= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    monday_first = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    monday_second= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    tuesday_first = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    tuesday_second= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    wednesday_first = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    wednesday_second= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    thursday_first = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    thursday_second= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    friday_first = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    friday_second= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    saturday_first = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    saturday_second= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
 
     def __str__(self):
-        return f"""sunday:{self.sundayFirst} ,{self.sundaySecond}\n
-                   monday:{self.mondayFirst} ,{self.mondaySecond}\n
-                   tuesday:{self.tuesdayFirst} ,{self.tuesdaySecond}\n
-                   wednesday:{self.wednesdayFirst} ,{self.wednesdaySecond}\n
-                   thursday:{self. thursdayFirst} ,{self. thursdaySecond}\n
-                   saturday:{self.saturdayFirst} ,{self.saturdaySecond}\n
+        return f"""name: {self.user_name}
+                   sunday:{self.sunday_first} ,{self.sunday_second}\n
+                   monday:{self.monday_first} ,{self.monday_second}\n
+                   tuesday:{self.tuesday_second} ,{self.tuesday_second}\n
+                   wednesday:{self.wednesday_first} ,{self.thursday_second}\n
+                   thursday:{self. friday_first} ,{self. friday_second}\n
+                   saturday:{self.saturday_first} ,{self.saturday_second}\n
                                                                              """
