@@ -70,7 +70,9 @@ def addshift (request):
 
 #all Shifts display for staff 
 @staff_member_required(login_url="Shifts:login") 
-def user_shifts(request):
+def all_shifts(request):
     return render(request,"Shifts/all_shifts.html",{
             "user_shifts":shiftSubmitTwo.objects.all()
     })
+
+
