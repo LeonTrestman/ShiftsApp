@@ -9,8 +9,9 @@ urlpatterns =[
     path("", views.index, name="index"),
     path("addshift", views.addshift, name="addshift"),
     path("login", views.login_view, name="login"),
-    path("logout",views.logout_view, name ="logout"),
-    path("all_shifts",views.all_shifts, name="all_shifts")
+    path("logout", views.logout_view, name ="logout"),
+    path("all_shifts", views.all_shifts, name="all_shifts"),
+    path("<str:user_name>" , views.user_shifts,name ="user shifts")
 ]
 
 urlpatterns += staticfiles_urlpatterns()

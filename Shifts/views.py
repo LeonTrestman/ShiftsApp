@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-
+from django.contrib.auth.models import User
 from . import forms 
 from Shifts.models import shiftSubmitTwo
 
@@ -63,6 +63,7 @@ def addshift (request):
                  "form": form
               })
 
+    #landing page before POST
     return render(request,"Shifts/addshift.html",{
         "form": forms.shiftSubmitTwoForm()
     })
@@ -72,7 +73,19 @@ def addshift (request):
 @staff_member_required(login_url="Shifts:login") 
 def all_shifts(request):
     return render(request,"Shifts/all_shifts.html",{
-            "user_shifts":shiftSubmitTwo.objects.all()
+            "all_shifts":shiftSubmitTwo.objects.all()
     })
 
+
+#TO Do : add if user doesnt exist 
+#return all shifts of certain user by his name
+@staff_member_required(login_url="Shifts:login") 
+def user_shifts(request,user_name):
+    uid = User.objects.get(username=f"{user_name}") #get usr by the user_name provided
+    user_shift_result= shiftSubmitTwo.objects.filter(user_name =f"{uid.id}" ) #filter with id of user
+    return render(request,"Shifts/user_shifts.html", {
+        "shift": user_shift_result
+    })
+
+    
 

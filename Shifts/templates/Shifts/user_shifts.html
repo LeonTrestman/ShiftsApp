@@ -1,0 +1,17 @@
+{% extends "Shifts/layout.html" %}
+
+{% block body %}            
+
+    <h1> {{ shift.username }} shifts in database:</h1>
+
+    {% for user_shift in shift %}
+              <ul>
+
+    
+        
+                      <li> sunday: {{ user_shift.sunday_first }} , {{ user_shift.sunday_second }} </li>
+
+          </ul>
+
+     {% endfor %}
+{% endblock %}
