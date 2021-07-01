@@ -1,6 +1,6 @@
 
 from django.contrib.auth import authenticate,login,logout
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
@@ -70,7 +70,7 @@ def addshift (request):
 
 
 #all Shifts display for staff 
-@staff_member_required(login_url="Shifts:login") 
+@staff_member_required() 
 def all_shifts(request):
     return render(request,"Shifts/all_shifts.html",{
             "all_shifts":shiftSubmitTwo.objects.all()
@@ -79,9 +79,9 @@ def all_shifts(request):
 
 #TO Do : add if user doesnt exist 
 #return all shifts of certain user by his name
-@staff_member_required(login_url="Shifts:login") 
+@staff_member_required() 
 def user_shifts(request,user_name):
-    uid = User.objects.get(username=f"{user_name}") #get usr by the user_name provided
+    uid= get_object_or_404(User,username=f"{user_name}") #get user by user_name or raise 404 if doesn't exsit
     user_shift_result= shiftSubmitTwo.objects.filter(user_name =f"{uid.id}" ) #filter with id of user
     return render(request,"Shifts/user_shifts.html", {
         "shift": user_shift_result
