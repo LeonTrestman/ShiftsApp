@@ -79,16 +79,16 @@ def all_shifts(request):
     })
 
 
-#TO Do : add if user doesnt exist 
-#return all shifts of certain user by his name
 
+#return all shifts of certain user by his name
+#optional pass up to days ago to get all shifts from user up to x days ago from now 
 @staff_member_required() 
 def user_shifts(request,user_name,up_to_days_ago=None):
     uid= get_object_or_404(User,username=f"{user_name}") #get user by user_name or raise 404 if doesn't exsit
-    if ( not up_to_days_ago == None  ):#if up_to_days_ago exisit
+    if ( not up_to_days_ago == None  ):#if up_to_days_ago exsits than query  up to x days ago from now
         time_threshold = timezone.now() - timedelta(days=up_to_days_ago)
-        user_shift_result= shiftSubmitTwo.objects.filter(user_name =f"{uid.id}", created_at__gte = time_threshold  ) #up_to days dont work
-    else:#display of the user shifts
+        user_shift_result= shiftSubmitTwo.objects.filter(user_name =f"{uid.id}", created_at__gte = time_threshold  ) 
+    else:#display of all the user shifts
         user_shift_result= shiftSubmitTwo.objects.filter(user_name =f"{uid.id}" ) #filter with id of user 
 
     return render(request,"Shifts/user_shifts.html", {
