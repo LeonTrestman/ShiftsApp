@@ -80,12 +80,17 @@ def all_shifts(request):
 #TO Do : add if user doesnt exist 
 #return all shifts of certain user by his name
 @staff_member_required() 
-def user_shifts(request,user_name):
+def user_shifts(request,user_name,*args):
+    
+
     uid= get_object_or_404(User,username=f"{user_name}") #get user by user_name or raise 404 if doesn't exsit
-    user_shift_result= shiftSubmitTwo.objects.filter(user_name =f"{uid.id}" ) #filter with id of user
+    if (args[0]): #up to a date ago
+        user_shift_result= shiftSubmitTwo.objects.filter(user_name =f"{uid.id}" ) #filter with id of user
+    else:
+        user_shift_result= shiftSubmitTwo.objects.filter(user_name =f"{uid.id}" ) #filter with id of user
     return render(request,"Shifts/user_shifts.html", {
         "shift": user_shift_result
     })
 
-    
+
 

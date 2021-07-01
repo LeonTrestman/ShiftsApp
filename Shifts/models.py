@@ -26,6 +26,8 @@ class shiftSubmitTwo(models.Model):
     friday_second= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
     saturday_first = models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
     saturday_second= models.IntegerField(validators=[MinValueValidator(minvalshift),MaxValueValidator(maxvalshift)])
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"""name: {self.user_name}
@@ -35,4 +37,6 @@ class shiftSubmitTwo(models.Model):
                    wednesday:{self.wednesday_first} ,{self.thursday_second}\n
                    thursday:{self. friday_first} ,{self. friday_second}\n
                    saturday:{self.saturday_first} ,{self.saturday_second}\n
+                   created_at:{self.created_at}\n
+                   updated_at:{self.updated_at}\n
                                                                              """
