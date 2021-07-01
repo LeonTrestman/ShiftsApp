@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from . import forms 
 from Shifts.models import shiftSubmitTwo
 from datetime import datetime, timedelta
+from django.utils import timezone
 
 # Create your views here.
 def index (request):
@@ -80,12 +81,13 @@ def all_shifts(request):
 
 #TO Do : add if user doesnt exist 
 #return all shifts of certain user by his name
-#pass up to days ago in args as first argument
+
 @staff_member_required() 
 def user_shifts(request,user_name,up_to_days_ago=None):
     uid= get_object_or_404(User,username=f"{user_name}") #get user by user_name or raise 404 if doesn't exsit
-    if (up_to_days_ago):#if args exisit
-        user_shift_result= shiftSubmitTwo.objects.filter(user_name =f"{uid.id}", created_at__gte = datetime.now()-timedelta(days=10) ) #up_to days dont work
+    if ( not up_to_days_ago == None  ):#if up_to_days_ago exisit
+        time_threshold = timezone.now() - timedelta(days=up_to_days_ago)
+        user_shift_result= shiftSubmitTwo.objects.filter(user_name =f"{uid.id}", created_at__gte = time_threshold  ) #up_to days dont work
     else:#display of the user shifts
         user_shift_result= shiftSubmitTwo.objects.filter(user_name =f"{uid.id}" ) #filter with id of user 
 
