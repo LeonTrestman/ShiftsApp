@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from Shifts.models import shiftSubmitTwo
+from Shifts.models import shiftSubmitTwo, weekly_schedule
 
 class NewShiftForm(forms.Form):
     sunday=forms.IntegerField(label="Sunday",min_value=0,max_value=3)
@@ -20,3 +20,9 @@ class shiftSubmitTwoForm (ModelForm):
     class Meta:
         model = shiftSubmitTwo
         exclude = ['user_name']
+
+
+class weekly_schedule_Form (ModelForm):
+    class Meta:
+        model = weekly_schedule
+        fields = '__all__'

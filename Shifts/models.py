@@ -4,6 +4,9 @@ from django.conf import settings
 
 # Create your models here.
 
+DAYS_OF_WEEK= ["sunday" , "monday" , "tuesday","wednesday","thursday","friday","saturday"]
+
+
 class shiftSubmitTwo(models.Model):
     
     #values for avilability 
@@ -30,13 +33,45 @@ class shiftSubmitTwo(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"""name: {self.user_name}\n
-                   sunday: {self.sunday_first} ,{self.sunday_second}\n
-                   monday: {self.monday_first} ,{self.monday_second}\n
-                   tuesday: {self.tuesday_second} ,{self.tuesday_second}\n
-                   wednesday: {self.wednesday_first} ,{self.thursday_second}\n
-                   thursday: {self. friday_first} ,{self. friday_second}\n
-                   saturday: {self.saturday_first} ,{self.saturday_second}\n
-                   created_at: {self.created_at.strftime("%m/%d/%Y , %H:%M:%S")}\n
-                   updated_at: {self.updated_at.strftime("%m/%d/%Y , %H:%M:%S")}\n
+        return f"""name: {self.user_name}
+                   sunday: {self.sunday_first} ,{self.sunday_second}
+                   monday: {self.monday_first} ,{self.monday_second}
+                   tuesday: {self.tuesday_second} ,{self.tuesday_second}
+                   wednesday: {self.wednesday_first} ,{self.thursday_second}
+                   thursday: {self. friday_first} ,{self. friday_second}
+                   saturday: {self.saturday_first} ,{self.saturday_second}
+                   created_at: {self.created_at.strftime("%d/%m/%Y , %H:%M:%S")}
+                   updated_at: {self.updated_at.strftime("%d/%m/%Y , %H:%M:%S")}
+                                                                             """
+
+## add table of shift per user on week
+
+class weekly_schedule(models.Model):
+    sunday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="sunday_first_user", on_delete=models.DO_NOTHING)
+    sunday_second_user= models.ForeignKey(settings.AUTH_USER_MODEL, related_name="sunday_second_user", on_delete=models.DO_NOTHING)
+    monday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="monday_first_user", on_delete=models.DO_NOTHING)
+    monday_second_user= models.ForeignKey(settings.AUTH_USER_MODEL, related_name="monday_second_user", on_delete=models.DO_NOTHING)
+    tuesday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="tuesday_first_user", on_delete=models.DO_NOTHING)
+    tuesday_second_user= models.ForeignKey(settings.AUTH_USER_MODEL, related_name="tuesday_second_user", on_delete=models.DO_NOTHING)
+    wednesday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="wednesday_first_user", on_delete=models.DO_NOTHING)
+    wednesday_second_user= models.ForeignKey(settings.AUTH_USER_MODEL, related_name="wednesday_second_user", on_delete=models.DO_NOTHING)
+    thursday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="thursday_first_user", on_delete=models.DO_NOTHING)
+    thursday_second_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="thursday_second_user", on_delete=models.DO_NOTHING)
+    friday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="friday_first_user", on_delete=models.DO_NOTHING)
+    friday_second_user= models.ForeignKey(settings.AUTH_USER_MODEL, related_name="friday_second_user", on_delete=models.DO_NOTHING)
+    saturday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="saturday_first_user", on_delete=models.DO_NOTHING)
+    saturday_second_user= models.ForeignKey(settings.AUTH_USER_MODEL, related_name="saturday_second_user", on_delete=models.DO_NOTHING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"""week : {self.created_at.strftime("%U")}\n
+                   sunday: {self.sunday_first_user} ,{self.sunday_second_user}\n
+                   monday: {self.monday_first_user} ,{self.monday_second_user}\n
+                   tuesday: {self.tuesday_second_user} ,{self.tuesday_second_user}\n
+                   wednesday: {self.wednesday_first_user} ,{self.thursday_second_user}\n
+                   thursday: {self. friday_first_user} ,{self. friday_second_user}\n
+                   saturday: {self.saturday_first_user} ,{self.saturday_second_user}\n
+                   created_at: {self.created_at.strftime("%d/%m/%Y , %H:%M:%S")}\n
+                   updated_at: {self.updated_at.strftime("%d/%m/%Y , %H:%M:%S")}\n
                                                                              """
