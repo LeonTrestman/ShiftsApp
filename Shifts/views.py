@@ -71,15 +71,14 @@ def addshift (request):
     })
 
 #changeing the weekly shift
-#if user has no weekly shift a new one will be created todo
-
+#if user has no weekly shift,he will be redriected to adding shhift with a msg of no weekly shifts
 @login_required()
 def myweekshift(request):
+
     #calculating this week
     week_start = timezone.now()
     week_start -= timedelta(days=(week_start.weekday()-1)%7) #for a week that starts on a Sunday
-    week_end = week_start + timedelta(days=7) 
-    #
+    week_end = week_start + timedelta(days=7) #7 days for satruday week-end change to 5 if you want untll thorsday
     user_shift_result = shiftSubmitTwo.objects.filter(user_name =request.user, created_at__gte=week_start,
         created_at__lt=week_end ).last()
     if  user_shift_result == None:# if weekly shift from user doesn't exist redireact to add shift
@@ -90,6 +89,10 @@ def myweekshift(request):
                 "user_shift":user_shift_result
         })
 
+
+#
+#todo chhange my weekly shift 
+#
 
 
 #all Shifts display for staff 
