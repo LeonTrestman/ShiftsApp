@@ -2,16 +2,16 @@
 
 {% block body %}            
 
-    <h1> {{ shift.username }} shifts in database:</h1>
+    <h1> {{ user_name }} shifts in database:</h1>
 
     {% for user_shift in shift %}
-              <ul>
+          <ul>
 
-    
-        
-                      <li> sunday: {{ user_shift.sunday_first }} , {{ user_shift.sunday_second }} </li>
-
-          </ul>
+           <li>{{user_shift}}</li>
+            
+                     
+          </ul>     
 
      {% endfor %}
+     
 {% endblock %}
