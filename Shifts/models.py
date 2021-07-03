@@ -2,33 +2,42 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
 
-# Create your models here.
 
-DAYS_OF_WEEK= ["sunday" , "monday" , "tuesday","wednesday","thursday","friday","saturday"]
+DAYS_OF_WEEK = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+]
+TYPE_OF_SHIFTS = ["first", "second"]
+
+# model for user availability for shifts
+# this model has 2 shifts for each day in a week
 
 
 class shiftSubmitTwo(models.Model):
-    
-    #values for avilability 
+    # values for availability
     min_val_shift = 0
     max_val_shift = 3
 
-    #on delete of user i still want to keep the old user shifts
-    user_name = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="shift_submitter", on_delete=models.DO_NOTHING)
-    sunday_first = models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    sunday_second= models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    monday_first = models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    monday_second= models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    tuesday_first = models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    tuesday_second= models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    wednesday_first = models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    wednesday_second= models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    thursday_first = models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    thursday_second= models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    friday_first = models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    friday_second= models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    saturday_first = models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
-    saturday_second= models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])
+    # on deletetion of user his shifts should remain in the database
+    user_name = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="shift_submitter",
+        on_delete=models.DO_NOTHING,
+    )
+
+    # creating the integerfield of availability of the shifts form user
+    for day in DAYS_OF_WEEK:
+        for shift_type in TYPE_OF_SHIFTS:
+            exec(
+                f"{day}_{shift_type} = models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])"
+            )
+
+    # datefields
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -44,34 +53,30 @@ class shiftSubmitTwo(models.Model):
                    updated_at: {self.updated_at.strftime("%d/%m/%Y , %H:%M:%S")}
                                                                              """
 
-## add table of shift per user on week
 
+# model for weekly assigments of users to shifts
+# this model has 2 shifts each day
 class weekly_schedule(models.Model):
-    sunday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="sunday_first_user", on_delete=models.DO_NOTHING)
-    sunday_second_user= models.ForeignKey(settings.AUTH_USER_MODEL, related_name="sunday_second_user", on_delete=models.DO_NOTHING)
-    monday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="monday_first_user", on_delete=models.DO_NOTHING)
-    monday_second_user= models.ForeignKey(settings.AUTH_USER_MODEL, related_name="monday_second_user", on_delete=models.DO_NOTHING)
-    tuesday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="tuesday_first_user", on_delete=models.DO_NOTHING)
-    tuesday_second_user= models.ForeignKey(settings.AUTH_USER_MODEL, related_name="tuesday_second_user", on_delete=models.DO_NOTHING)
-    wednesday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="wednesday_first_user", on_delete=models.DO_NOTHING)
-    wednesday_second_user= models.ForeignKey(settings.AUTH_USER_MODEL, related_name="wednesday_second_user", on_delete=models.DO_NOTHING)
-    thursday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="thursday_first_user", on_delete=models.DO_NOTHING)
-    thursday_second_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="thursday_second_user", on_delete=models.DO_NOTHING)
-    friday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="friday_first_user", on_delete=models.DO_NOTHING)
-    friday_second_user= models.ForeignKey(settings.AUTH_USER_MODEL, related_name="friday_second_user", on_delete=models.DO_NOTHING)
-    saturday_first_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="saturday_first_user", on_delete=models.DO_NOTHING)
-    saturday_second_user= models.ForeignKey(settings.AUTH_USER_MODEL, related_name="saturday_second_user", on_delete=models.DO_NOTHING)
+    # creating field for user placment for each shift
+    for day in DAYS_OF_WEEK:
+        for shift_type in TYPE_OF_SHIFTS:
+            # on deletetion of user his shifts should remain in the database
+            exec(
+                f'{day}_{shift_type}_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="{day}_{shift_type}_user", on_delete=models.DO_NOTHING)'
+            )
+
+    # datefields
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"""week : {self.created_at.strftime("%U")}\n
-                   sunday: {self.sunday_first_user} ,{self.sunday_second_user}\n
-                   monday: {self.monday_first_user} ,{self.monday_second_user}\n
-                   tuesday: {self.tuesday_second_user} ,{self.tuesday_second_user}\n
-                   wednesday: {self.wednesday_first_user} ,{self.thursday_second_user}\n
-                   thursday: {self. friday_first_user} ,{self. friday_second_user}\n
-                   saturday: {self.saturday_first_user} ,{self.saturday_second_user}\n
-                   created_at: {self.created_at.strftime("%d/%m/%Y , %H:%M:%S")}\n
-                   updated_at: {self.updated_at.strftime("%d/%m/%Y , %H:%M:%S")}\n
-                                                                             """
+        return f"""week : {self.created_at.strftime("%U")} 
+                   sunday: {self.sunday_first_user} ,{self.sunday_second_user} 
+                   monday: {self.monday_first_user} ,{self.monday_second_user} 
+                   tuesday: {self.tuesday_second_user} ,{self.tuesday_second_user} 
+                   wednesday: {self.wednesday_first_user} ,{self.thursday_second_user}
+                   thursday: {self. friday_first_user} ,{self. friday_second_user}
+                   saturday: {self.saturday_first_user} ,{self.saturday_second_user}
+                   created_at: {self.created_at.strftime("%d/%m/%Y , %H:%M:%S")}
+                   updated_at: {self.updated_at.strftime("%d/%m/%Y , %H:%M:%S")}
+                                                                               """
