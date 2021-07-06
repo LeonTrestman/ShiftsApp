@@ -1,0 +1,20 @@
+{% extends "Shifts/layout.html" %}
+
+{% block body %}
+
+    <h1>this is a test for add shift </h1>
+
+    <!--displaying Error messages-->
+    {% if messages %}
+        {% for message in messages %}
+          {{message}}
+        {% endfor %}
+    {% endif %}
+
+    <form action="{% url 'Shifts:addshifts' %}" method ="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
+    </form>
+
+{% endblock %}
