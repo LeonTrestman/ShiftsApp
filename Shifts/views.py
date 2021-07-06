@@ -10,7 +10,7 @@ from django.utils import timezone
 from django.contrib import messages
 
 
-#index page
+# index page
 def index(request):
 
     return render(request, "Shifts/index.html")
@@ -48,13 +48,13 @@ def add_shifts(request):
 
     if request.method == "POST":
 
-        weekly_user_shift=get_weekly_user_shifts(request)
+        weekly_user_shift = get_weekly_user_shifts(request)
         # if weekly shift from user doesn't exist create a new form
-        if (weekly_user_shift == None):
+        if weekly_user_shift == None:
             form = shiftSubmitTwoForm(request.POST)
-        #update the weekly shifts
-        else: 
-            form = shiftSubmitTwoForm(request.POST,instance=weekly_user_shift)
+        # update the weekly shifts
+        else:
+            form = shiftSubmitTwoForm(request.POST, instance=weekly_user_shift)
 
         if form.is_valid():
             # adding authenticed user into the model
@@ -71,17 +71,19 @@ def add_shifts(request):
     return render(request, "Shifts/addshifts.html", {"form": shiftSubmitTwoForm()})
 
 
-
 # returns user weekly shift from the database
 def get_weekly_user_shifts(request):
     # calculating this week
-    week_start = timezone.now()
+    week_start = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0) 
     # for a week that starts on a Sunday
-    week_start -= timedelta(days=(week_start.weekday() - 1) % 7)
+    week_start -= timedelta(days=(week_start.weekday() + 1) % 7)
+    #print(f' the time is: {week_start}')  DEBUG
     # 7 days for satruday week-end change to 5 if you want untll thorsday
     week_end = week_start + timedelta(days=7)
+    #print(f' the time end : {week_end}') DEBUG
     return shiftSubmitTwo.objects.filter(
-        user_name=request.user, created_at__gte=week_start, created_at__lt=week_end
+        user_name=request.user, created_at__gte=week_start,
+                created_at__lt=week_end
     ).last()
 
 
@@ -89,17 +91,13 @@ def get_weekly_user_shifts(request):
 @login_required()
 def myweekshift(request):
     user_shift_result = get_weekly_user_shifts(request)
-     # if weekly shift from user doesn't exist redireact to add shift
-    if (
-        user_shift_result == None
-    ): 
+    # if weekly shift from user doesn't exist redireact to add shift
+    if user_shift_result == None:
         # msg of error no shift schedule
         messages.error(request, f"{request.user} has no weekly shifts schedule.")
         return redirect("Shifts:addshifts")
 
     return render(request, "Shifts/myweekshift.html", {"user_shift": user_shift_result})
-
-
 
 
 # all Shifts display for staff
