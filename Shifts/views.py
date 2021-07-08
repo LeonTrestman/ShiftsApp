@@ -1,14 +1,14 @@
 from django.contrib.auth import authenticate, login, logout
+from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
-from Shifts.forms import shiftSubmitTwoForm
-from Shifts.models import shiftSubmitTwo
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.contrib import messages
-
+from .models import shiftSubmitTwo
+from .forms import shiftSubmitTwoForm
 
 # index page
 def index(request):
@@ -74,16 +74,15 @@ def add_shifts(request):
 # returns user weekly shift from the database
 def get_weekly_user_shifts(request):
     # calculating this week
-    week_start = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0) 
+    week_start = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0)
     # for a week that starts on a Sunday
     week_start -= timedelta(days=(week_start.weekday() + 1) % 7)
-    #print(f' the time is: {week_start}')  DEBUG
+    # print(f' the time is: {week_start}')  DEBUG
     # 7 days for satruday week-end change to 5 if you want untll thorsday
     week_end = week_start + timedelta(days=7)
-    #print(f' the time end : {week_end}') DEBUG
+    # print(f' the time end : {week_end}') DEBUG
     return shiftSubmitTwo.objects.filter(
-        user_name=request.user, created_at__gte=week_start,
-                created_at__lt=week_end
+        user_name=request.user, created_at__gte=week_start, created_at__lt=week_end
     ).last()
 
 
@@ -117,12 +116,23 @@ def all_shifts(request, up_to_days_ago=None):
     return render(request, "Shifts/all_shifts.html", {"all_shifts": all_shift_res})
 
 
+# returns user by user_name or raise 404 if doesn't exsit
+def get_uid_by_name(user_name):
+    return get_object_or_404(User, username=f"{user_name}")
+
+
 # return all shifts of certain user by his name
+# only staff/admin and the user itself can see their shift history
 # optional pass up to days ago to get all shifts from user up to x days ago from now
-@staff_member_required()
+@login_required()
 def user_shifts(request, user_name, up_to_days_ago=None):
-    # get user by user_name or raise 404 if doesn't exsit
-    uid = get_object_or_404(User, username=f"{user_name}")
+
+    # only staff/admin and the user it self can see their shift history
+    if not request.user.is_staff and request.user.username != user_name:
+        raise Http404('Error, user name does\'nt match ')
+
+    # getting the user by name
+    uid = get_uid_by_name(user_name)
     if (
         not up_to_days_ago == None
     ):  # if up_to_days_ago exsits than query up to x days ago from now
