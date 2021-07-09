@@ -35,11 +35,13 @@
             <li class="nav-item px-3">
               <a class="nav-link active" href="{% url 'Shifts:my_weeks_shift' %}" style="font-size: larger;" >My Shift</a>
             </li>
+            
               <!-- logout appear only if request logged index -->
               {% if request.user.is_authenticated %}
 
-                 <li class="nav-item px-3">
-                  <a class="nav-link active"  style="font-size: larger;" >{{ user.username }} </a>
+              <!-- clicking on username when logged give you the history of user shifts -->
+                <li class="nav-item px-3">
+                  <a class="nav-link active" href={% url 'Shifts:index' %}{{user.username}} style="font-size: larger;" >{{ user.username }} </a>
                 </li>
 
                 <li class="nav-item px-3">
