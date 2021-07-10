@@ -1,18 +1,7 @@
+from .consts import DAYS_OF_WEEK,TYPE_OF_SHIFTS
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
-
-
-DAYS_OF_WEEK = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-]
-TYPE_OF_SHIFTS = ["first", "second"]
 
 # model for user availability for shifts
 # this model has 2 shifts for each day in a week

@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
-from Shifts.models import shiftSubmitTwo, weekly_schedule
+from .models import shiftSubmitTwo, weekly_schedule
+from .consts import DAYS_OF_WEEK,TYPE_OF_SHIFTS
 
 class NewShiftForm(forms.Form):
     sunday=forms.IntegerField(label="Sunday",min_value=0,max_value=3)
@@ -14,13 +15,15 @@ class NewShiftForm(forms.Form):
 
 
 
-days= ["Sunday" , "Monday" , "Tuesday","wednesday","thursday"]
-
 class shiftSubmitTwoForm (ModelForm):
     class Meta:
         model = shiftSubmitTwo
         exclude = ['user_name']
 
+        widgets={}
+        for day in DAYS_OF_WEEK:
+            for shift_type in TYPE_OF_SHIFTS:
+                widgets[f'{day}_{shift_type}'] =forms.NumberInput(attrs={'class': 'form-control'})        
 
 class weekly_schedule_Form (ModelForm):
     class Meta:

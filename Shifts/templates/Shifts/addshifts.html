@@ -2,19 +2,33 @@
 
 {% block body %}
 
-    <h1>this is a test for add shift </h1>
-
+    <div class="container">
+    
     <!--displaying Error messages-->
     {% if messages %}
         {% for message in messages %}
-          {{message}}
+        {{message}}
         {% endfor %}
     {% endif %}
 
-    <form action="{% url 'Shifts:addshifts' %}" method ="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit">
-    </form>
 
+    
+        <h1>this is a test for add shift </h1>
+
+            <form action="{% url 'Shifts:addshifts' %}" method ="post">
+                {% csrf_token %}   
+                
+                <div class="row">
+                        {% for field in form %}   
+                        <div class="col-sm-6">
+                                 {{ field.label }}{{ field }}
+                        </div>
+                        {% endfor %}
+                </div>
+                <input type="submit">
+            </form>
+
+       
+   </div>     
+  
 {% endblock %}
