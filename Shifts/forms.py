@@ -3,14 +3,14 @@ from django.forms import ModelForm
 from .models import shiftSubmitTwo, weekly_schedule
 from .consts import DAYS_OF_WEEK,TYPE_OF_SHIFTS
 
-class NewShiftForm(forms.Form):
-    sunday=forms.IntegerField(label="Sunday",min_value=0,max_value=3)
-    monday=forms.IntegerField(label="monday",min_value=0,max_value=3)
-    tuesday=forms.IntegerField(label="tuesday",min_value=0,max_value=3)
-    wednesday=forms.IntegerField(label="wednesday",min_value=0,max_value=3)
-    thursday=forms.IntegerField(label="thursday",min_value=0,max_value=3)
-    friday=forms.IntegerField(label="friday",min_value=0,max_value=3)
-    saturday=forms.IntegerField(label="saturday",min_value=0,max_value=3)
+# class NewShiftForm(forms.Form):
+#     sunday=forms.IntegerField(label="Sunday",min_value=0,max_value=3)
+#     monday=forms.IntegerField(label="monday",min_value=0,max_value=3)
+#     tuesday=forms.IntegerField(label="tuesday",min_value=0,max_value=3)
+#     wednesday=forms.IntegerField(label="wednesday",min_value=0,max_value=3)
+#     thursday=forms.IntegerField(label="thursday",min_value=0,max_value=3)
+#     friday=forms.IntegerField(label="friday",min_value=0,max_value=3)
+#     saturday=forms.IntegerField(label="saturday",min_value=0,max_value=3)
 
 
 

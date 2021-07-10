@@ -2,30 +2,88 @@
 
 {% block body %}
 
-    <div class="container">
-    
+
+
     <!--displaying Error messages-->
     {% if messages %}
-        {% for message in messages %}
-        {{message}}
-        {% endfor %}
+                
+    {% for message in messages %}
+
+
+    <div class="alert alert-danger text-center" role="alert">
+        {{message}} 
+
+    </div>
+
+    {% endfor %}       
+
+
     {% endif %}
 
+    <div class="container border border-dark">
+       
+   
 
     
-        <h1>this is a test for add shift </h1>
+    <script>
+        
+        const DAYS =[
+             "Sunday",
+             "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              ]
+        
+        
+       //takes dayIndex from sunday(0) to saturday(6)
+        function nextDate(dayIndex) {
+            var today = new Date();
+            today.setDate(today.getDate() + (dayIndex - 1 - today.getDay() + 7) % 7 + 1);
+            return today;
+        }
+
+        //displays date for next week
+        document.addEventListener("DOMContentLoaded",()=>{
+            var next_week = nextDate(0);
+            //var nextWeekFrom = new Date(date.setDate(nextWeekStart));
+            for (let i = 0; i < DAYS.length; ++i) { 
+                
+                document.getElementById(`${DAYS[i]} first`).innerHTML =next_week.toLocaleString('he-IL',{year: 'numeric', month: 'numeric', day: 'numeric'});
+                //loop next week 
+                next_week.setDate(next_week.getDate() + 1);
+              
+              }
+            }
+        
+        )
+    </script>
 
             <form action="{% url 'Shifts:addshifts' %}" method ="post">
                 {% csrf_token %}   
                 
                 <div class="row">
                         {% for field in form %}   
-                        <div class="col-sm-6">
+
+                        {% if "first" in field.label %}
+                            <div class="col-sm-12 ">
+                                <h1 class="text-center" id="{{field.label}}"> Date</h1>
+                            </div>   
+                        {% endif %}
+                        <div class="col-sm-6 ">
                                  {{ field.label }}{{ field }}
                         </div>
                         {% endfor %}
                 </div>
-                <input type="submit">
+                
+                <div class="d-flex justify-content-center" >
+
+                       <button type="submit" class="btn btn-primary m-4">Submit</button>
+
+                </div>
+                
             </form>
 
        
