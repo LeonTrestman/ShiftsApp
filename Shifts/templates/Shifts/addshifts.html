@@ -20,7 +20,7 @@
 
     {% endif %}
 
-    <div class="container bg-light justify-content-center  border border-top-0  border-secondary rounded   " style="max-width: 800px;">
+    <div class="container bg-light justify-content-center  border border-top-0  rounded   " style="max-width: 800px; border-color: #feac33 !important;">
        
    
 
@@ -68,13 +68,13 @@
                         {% for field in form %}   
 
                         {% if "first" in field.label %}
-                            <div class="col-sm-12 p-1 mx-auto border-bottom border-info ">
-                                <p class="text-center h4 fst-italic " id="{{field.label}}"> Date</p>
+                            <div class="col-sm-12 p-1 mx-auto border-bottom  " style=" border-color: #feac33 !important;">
+                                <p class="text-center h4 fst-italic " id="{{field.label}}"  style="color:#fdae38 ;"> Date</p>
                             </div>   
                         {% endif %}
 
-                        <div class="col-sm-6 pl-3  d-flex  border-bottom border-info   ">
-                            <div class="col-sm-3  fw-bolder text-dark text-center mx-auto">
+                        <div class="col-sm-6 pl-3  d-flex  border-bottom    " style=" border-color: #feac33 !important;">
+                            <div class="col-sm-3 py-1 fw-bolder text-dark text-center mx-auto " >
                                 {{ field.label }}
                                
                             </div>
@@ -89,7 +89,7 @@
                 
                 <div class="d-flex justify-content-center" >
 
-                       <button type="submit" class="btn btn-primary m-2">Submit</button>
+                       <input type="submit" class="btn btn-primary m-2"></input>
 
                 </div>
                 
