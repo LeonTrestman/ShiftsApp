@@ -23,7 +23,7 @@ class shiftSubmitTwo(models.Model):
     for day in DAYS_OF_WEEK:
         for shift_type in TYPE_OF_SHIFTS:
             exec(
-                f"{day}_{shift_type} = models.IntegerField(validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])"
+                f"{day}_{shift_type} = models.IntegerField(default=0,validators=[MinValueValidator(min_val_shift),MaxValueValidator(max_val_shift)])"
             )
 
     # datefields
