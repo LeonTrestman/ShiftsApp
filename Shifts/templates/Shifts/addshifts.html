@@ -20,7 +20,7 @@
 
     {% endif %}
 
-    <div class="container-sm bg-light justify-content-center  border border-top-0  border-secondary rounded   " style="max-width: 800px;">
+    <div class="container bg-light justify-content-center  border border-top-0  border-secondary rounded   " style="max-width: 800px;">
        
    
 
@@ -68,18 +68,18 @@
                         {% for field in form %}   
 
                         {% if "first" in field.label %}
-                            <div class="col-sm-12 p-1 d-flex justify-content-center border-bottom border-info ">
+                            <div class="col-sm-12 p-1 mx-auto border-bottom border-info ">
                                 <p class="text-center h4 fst-italic " id="{{field.label}}"> Date</p>
                             </div>   
                         {% endif %}
 
                         <div class="col-sm-6 pl-3  d-flex  border-bottom border-info   ">
-                            <div class="col-sm-3 p-2 fw-bolder text-dark text-center me-auto">
+                            <div class="col-sm-3  fw-bolder text-dark text-center mx-auto">
                                 {{ field.label }}
                                
                             </div>
 
-                            <div class="col-sm-3 p-2 me-auto ">
+                            <div class="col-sm-3 py-2 mx-auto ">
                                 {{ field }}
                             </div>
                                  
