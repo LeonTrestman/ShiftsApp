@@ -20,7 +20,7 @@
 
     {% endif %}
 
-    <div class="container border border-dark">
+    <div class="container-sm bg-light justify-content-center  border border-top-0  border-secondary rounded   " style="max-width: 800px;">
        
    
 
@@ -64,23 +64,32 @@
             <form action="{% url 'Shifts:addshifts' %}" method ="post">
                 {% csrf_token %}   
                 
-                <div class="row">
+                <div class="row ">
                         {% for field in form %}   
 
                         {% if "first" in field.label %}
-                            <div class="col-sm-12 ">
-                                <h1 class="text-center" id="{{field.label}}"> Date</h1>
+                            <div class="col-sm-12 p-1 d-flex justify-content-center border-bottom border-info ">
+                                <p class="text-center h4 fst-italic " id="{{field.label}}"> Date</p>
                             </div>   
                         {% endif %}
-                        <div class="col-sm-6 ">
-                                 {{ field.label }}{{ field }}
+
+                        <div class="col-sm-6 pl-3  d-flex  border-bottom border-info   ">
+                            <div class="col-sm-3 p-2 fw-bolder text-dark text-center me-auto">
+                                {{ field.label }}
+                               
+                            </div>
+
+                            <div class="col-sm-3 p-2 me-auto ">
+                                {{ field }}
+                            </div>
+                                 
                         </div>
                         {% endfor %}
                 </div>
                 
                 <div class="d-flex justify-content-center" >
 
-                       <button type="submit" class="btn btn-primary m-4">Submit</button>
+                       <button type="submit" class="btn btn-primary m-2">Submit</button>
 
                 </div>
                 
