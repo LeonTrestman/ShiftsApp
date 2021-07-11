@@ -36,6 +36,7 @@
               "Friday",
               "Saturday",
               ]
+              
         
         
        //takes dayIndex from sunday(0) to saturday(6)
@@ -50,9 +51,19 @@
             var next_week = nextDate(0);
             //var nextWeekFrom = new Date(date.setDate(nextWeekStart));
             for (let i = 0; i < DAYS.length; ++i) { 
+             
+               
+                // weekends have diffrent label due to diffrent hours
+                if (`${DAYS[i]}` === "Friday" || `${DAYS[i]}` === "Saturday"  ){
+                   
+                    document.getElementById(`${DAYS[i]} evening 15:00-23:00`).innerHTML =next_week.toLocaleString('he-IL',{year: 'numeric', month: 'numeric', day: 'numeric'});
+                }
                 
-                document.getElementById(`${DAYS[i]} first`).innerHTML =next_week.toLocaleString('he-IL',{year: 'numeric', month: 'numeric', day: 'numeric'});
-                //loop next week 
+                else
+                {
+                    document.getElementById(`${DAYS[i]} evening 16:00-23:00`).innerHTML =next_week.toLocaleString('he-IL',{year: 'numeric', month: 'numeric', day: 'numeric'});    
+                }
+                //loop next week (day)
                 next_week.setDate(next_week.getDate() + 1);
               
               }
@@ -67,14 +78,14 @@
                 <div class="row ">
                         {% for field in form %}   
 
-                        {% if "first" in field.label %}
+                        {% if "evening" in field.label %}
                             <div class="col-sm-12 p-1 mx-auto border-bottom  " style=" border-color: #feac33 !important;">
                                 <p class="text-center h4 fst-italic " id="{{field.label}}"  style="color:#fdae38 ;"> Date</p>
                             </div>   
                         {% endif %}
 
                         <div class="col-sm-6 pl-3  d-flex  border-bottom    " style=" border-color: #feac33 !important;">
-                            <div class="col-sm-3 py-1 fw-bolder text-dark text-center mx-auto " >
+                            <div class="col-sm-3 py-1 fw-bolder text-dark d-flex text-center mx-auto " >
                                 {{ field.label }}
                                
                             </div>

@@ -1,4 +1,4 @@
-from .consts import DAYS_OF_WEEK,TYPE_OF_SHIFTS,MIN_VAL_SHIFT,MAX_VAL_SHIFT
+from .consts import DAYS_OF_WEEK, SHIFTS_HOURS_REG, SHIFTS_HOURS_REG_UNDERSCORE, SHIFTS_HOURS_WEEKENDS, SHIFTS_HOURS_WEEKENDS_UNDERSCORE,TYPE_OF_SHIFTS,MIN_VAL_SHIFT,MAX_VAL_SHIFT
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
@@ -20,17 +20,31 @@ class shiftSubmitTwo(models.Model):
 
     # creating the integerfield of availability of the shifts form user
     for day in DAYS_OF_WEEK:
-        for shift_type in TYPE_OF_SHIFTS:
-            exec(
-                f"{day}_{shift_type} = models.IntegerField(default=0,validators=[MinValueValidator(MIN_VAL_SHIFT),MaxValueValidator(MAX_VAL_SHIFT)])"
-            )
+        #weekends have diffrent hours
+        if (day == 'friday' or day == 'saturday'):
+            for shift_type,shift_hour in zip(TYPE_OF_SHIFTS,SHIFTS_HOURS_WEEKENDS  ) :
+
+                exec(
+                    f'{day}_{shift_type} = models.IntegerField(verbose_name =f"{day} {shift_type} {shift_hour}" ,default=0 ,validators=[MinValueValidator(MIN_VAL_SHIFT),MaxValueValidator(MAX_VAL_SHIFT)])'
+                )
+                
+        else:
+            for shift_type,shift_hour in zip(TYPE_OF_SHIFTS,SHIFTS_HOURS_REG ) :
+
+                exec(
+                    f'{day}_{shift_type} = models.IntegerField(verbose_name =f"{day} {shift_type} {shift_hour}" ,default=0 ,validators=[MinValueValidator(MIN_VAL_SHIFT),MaxValueValidator(MAX_VAL_SHIFT)])'
+                )    
+            #TODO: fix here variable name with underscore and label with regular      
+
+            
 
     # datefields
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    #TODO:fix #3 str
     def __str__(self):
-        return f"""name: {self.user_name}
+        return f"""name: {self.user_name} 
                    sunday: {self.sunday_first} ,{self.sunday_second}
                    monday: {self.monday_first} ,{self.monday_second}
                    tuesday: {self.tuesday_second} ,{self.tuesday_second}
