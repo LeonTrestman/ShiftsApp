@@ -20,6 +20,7 @@ class shiftSubmitTwo(models.Model):
 
     # creating the integerfield of availability of the shifts form user
     for day in DAYS_OF_WEEK:
+        
         #weekends have diffrent hours
         if (day == 'friday' or day == 'saturday'):
             for shift_type,shift_hour in zip(TYPE_OF_SHIFTS,SHIFTS_HOURS_WEEKENDS  ) :
@@ -34,7 +35,7 @@ class shiftSubmitTwo(models.Model):
                 exec(
                     f'{day}_{shift_type} = models.IntegerField(verbose_name =f"{day} {shift_type} {shift_hour}" ,default=0 ,validators=[MinValueValidator(MIN_VAL_SHIFT),MaxValueValidator(MAX_VAL_SHIFT)])'
                 )    
-            #TODO: fix here variable name with underscore and label with regular      
+         
 
             
 
@@ -42,15 +43,15 @@ class shiftSubmitTwo(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    #TODO:fix #3 str
+    
     def __str__(self):
         return f"""name: {self.user_name} 
-                   sunday: {self.sunday_first} ,{self.sunday_second}
-                   monday: {self.monday_first} ,{self.monday_second}
-                   tuesday: {self.tuesday_second} ,{self.tuesday_second}
-                   wednesday: {self.wednesday_first} ,{self.thursday_second}
-                   thursday: {self. friday_first} ,{self. friday_second}
-                   saturday: {self.saturday_first} ,{self.saturday_second}
+                   sunday: {self.sunday_evening} ,{self.sunday_night}
+                   monday: {self.monday_evening} ,{self.monday_night}
+                   tuesday: {self.tuesday_evening} ,{self.tuesday_night}
+                   wednesday: {self.wednesday_evening} ,{self.thursday_night}
+                   thursday: {self. friday_evening} ,{self. friday_night}
+                   saturday: {self.saturday_evening} ,{self.saturday_night}
                    created_at: {self.created_at.strftime("%d/%m/%Y , %H:%M:%S")}
                    updated_at: {self.updated_at.strftime("%d/%m/%Y , %H:%M:%S")}
                                                                              """
@@ -73,12 +74,12 @@ class weekly_schedule(models.Model):
 
     def __str__(self):
         return f"""week : {self.created_at.strftime("%U")} 
-                   sunday: {self.sunday_first_user} ,{self.sunday_second_user} 
-                   monday: {self.monday_first_user} ,{self.monday_second_user} 
-                   tuesday: {self.tuesday_second_user} ,{self.tuesday_second_user} 
-                   wednesday: {self.wednesday_first_user} ,{self.thursday_second_user}
-                   thursday: {self. friday_first_user} ,{self. friday_second_user}
-                   saturday: {self.saturday_first_user} ,{self.saturday_second_user}
+                   sunday: {self.sunday_evening_user} ,{self.sunday_night_user} 
+                   monday: {self.monday_evening_user} ,{self.monday_night_user} 
+                   tuesday: {self.tuesday_evening_user} ,{self.tuesday_night_user} 
+                   wednesday: {self.wednesday_evening_user} ,{self.thursday_night_user}
+                   thursday: {self. friday_evening_user} ,{self. friday_night_user}
+                   saturday: {self.saturday_evening_user} ,{self.saturday_night_user}
                    created_at: {self.created_at.strftime("%d/%m/%Y , %H:%M:%S")}
                    updated_at: {self.updated_at.strftime("%d/%m/%Y , %H:%M:%S")}
                                                                                """
