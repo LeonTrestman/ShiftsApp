@@ -2,10 +2,6 @@
 
 {% block body %}
 
-    {% if message%}
-        <!--failed message-->
-        <div> {{message}}  </div>
-    {% endif %}
     
     <form action="{% url 'Shifts:login' %}" method="post" id="loginform">
          {% csrf_token %}

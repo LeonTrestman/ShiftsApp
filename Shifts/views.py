@@ -25,9 +25,11 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            messages.success(request,  f"{request.user} sucssesfully logged in")
             return redirect("Shifts:index")
         else:
-            return render(request, "Shifts/login.html", {"message": "Invalid Input."})
+            messages.error(request, f"Invalid login,Please try again")
+            return render(request, "Shifts/login.html")
 
     return render(request, "Shifts/login.html")
 
@@ -36,39 +38,47 @@ def login_view(request):
 def logout_view(request):
     user_name = request.user.username  # get user name before logout
     logout(request)
+    messages.success(request,  f" {user_name} logged out.")
     return render(
-        request, "Shifts/login.html", {"message": f" {user_name} Logged out."}
+        request, "Shifts/login.html"
     )
 
 
 # adding shifts/ updating weekly shifts (if they exsit)
+# check if weekly shift is avaliable and updates or creates one
 # the shifts contain the praiorities of the user as well as creation/update data
+
 @login_required()
 def add_shifts(request):
 
+    weekly_user_shift = get_weekly_user_shifts(request)
+      
+    # if weekly shift from user doesn't exist create a new form
+    if weekly_user_shift == None:
+        form = shiftSubmitTwoForm()
+    # update the weekly shifts
+    else:
+        form = shiftSubmitTwoForm(instance=weekly_user_shift)
+
     if request.method == "POST":
-
-        weekly_user_shift = get_weekly_user_shifts(request)
-        # if weekly shift from user doesn't exist create a new form
-        if weekly_user_shift == None:
-            form = shiftSubmitTwoForm(request.POST)
-        # update the weekly shifts
-        else:
-            form = shiftSubmitTwoForm(request.POST, instance=weekly_user_shift)
-
+        #change the last week shifts
+        form = shiftSubmitTwoForm(request.POST, instance=weekly_user_shift)
         if form.is_valid():
             # adding authenticed user into the model
-            # login is required so  user always not null
+            # login is required so user always not null
             shift_submit = form.save(commit=False)
             shift_submit.user_name = request.user
             shift_submit.save()
+            messages.success(request, 'Shift schedule have been changed.')
+            return render(request, "Shifts/addshifts.html", {"form": form,})
+        ######################################################
 
         else:
+            messages.error(request,"Erorr,Form isn't valid")
             return render(request, "Shifts/addshifts.html", {"form": form})
 
-    # landing page before POST
-    # to do here
-    return render(request, "Shifts/addshifts.html", {"form": shiftSubmitTwoForm()})
+
+    return render(request, "Shifts/addshifts.html", {"form": form})
 
 
 # returns user weekly shift from the database
