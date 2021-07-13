@@ -29,7 +29,7 @@ def login_view(request):
             return redirect("Shifts:index")
         else:
             messages.error(request, f"Invalid login,Please try again")
-            return render(request, "Shifts/login.html")
+            
 
     return render(request, "Shifts/login.html")
 
@@ -70,12 +70,12 @@ def add_shifts(request):
             shift_submit.user_name = request.user
             shift_submit.save()
             messages.success(request, 'Shift schedule have been changed.')
-            return render(request, "Shifts/addshifts.html", {"form": form,})
+            
         ######################################################
 
         else:
-            messages.error(request,"Erorr,Form isn't valid")
-            return render(request, "Shifts/addshifts.html", {"form": form})
+            messages.error(request,"Error,Form isn't valid")
+            
 
 
     return render(request, "Shifts/addshifts.html", {"form": form})
