@@ -56,12 +56,12 @@ def add_shifts(request):
     # if weekly shift from user doesn't exist create a new form
     if weekly_user_shift == None:
         form = shiftSubmitTwoForm()
-    # update the weekly shifts
+    # update the weekly shifts values
     else:
         form = shiftSubmitTwoForm(instance=weekly_user_shift)
 
     if request.method == "POST":
-        #change the last week shifts
+        #changes  the last week shifts (creates or updates)
         form = shiftSubmitTwoForm(request.POST, instance=weekly_user_shift)
         if form.is_valid():
             # adding authenticed user into the model
