@@ -2,16 +2,32 @@
 
 {% block body %}            
 
-    <h1> {{ user_name }} shifts in database:</h1>
+ <div class="container-sm bg-light justify-content-center  border border-top-0  rounded mx-auto mb-2  " style="max-width: 800px; border-color: #feac33 !important;"> 
+    
 
-    {% for user_shift in shift %}
-          <ul>
+                    
+     <div class="row ">
+          {% for field in shift %}   
 
-           <li>{{user_shift}}</li>
-            
-                     
-          </ul>     
+          {% if "evening" in field.label %}
+               <div class="col-sm-12 p-1 mx-auto border-bottom  " style=" border-color: #feac33 !important;">
+                    <p class="text-center h4 fst-italic " id="{{field.label}}"  style="color:#fdae38 ;"> Date</p>
+               </div>   
+          {% endif %}
 
-     {% endfor %}
-     
+          <div class="col-sm-6 d-flex py-2  border-bottom  " style=" border-color: #feac33 !important;">
+               <div class="col-sm-6 px-3 fw-bolder text-center text-dark   mx-auto " >
+                    {{ field.label }}
+                    
+               </div>
+
+               <div class="col-sm-4 px-2 py-1 mx-auto ">
+                    {{ field }}
+               </div>
+                    
+          </div>
+          {% endfor %}
+     </div>
+ </div>
+
 {% endblock %}

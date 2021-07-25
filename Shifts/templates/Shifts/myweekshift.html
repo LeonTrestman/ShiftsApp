@@ -2,12 +2,60 @@
 
 {% block body %}   
 
-     <ul>
+   <div class="container-sm bg-light px-0  pb-2   border border-top-0 rounded  mb-2  " style="max-width: 800px; border-color: #feac33 !important;"> 
 
-           <li>{{user_shift}}</li>
-            
-                     
-    </ul>     
 
+        <!-- to do : add date to each day-->
+        
+        <div class="table-responsive">
+            <table class="table" style=" border-color: #feac33 !important;">
+                <thead class= "text-center" style=" color: white; background-color: #feac33 ;">
+                    <th scope="col"><br></th>
+                    <th scope="col">Sunday <br> 17.2</th>
+                    <th scope="col">Monday</th>
+                    <th scope="col">Tuesday</th>
+                    <th scope="col">Wednesday</th>
+                    <th scope="col">Thursday</th>
+                    <th scope="col">Friday</th>
+                    <th scope="col">Saturday</th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class ="text-center" >
+                        <th scope="row " >Evening</th>
+                        <td >{{user_shift.sunday_evening}}</td>
+                        <td>{{user_shift.monday_evening}}</td>
+                        <td>{{user_shift.tuesday_evening}}</td>
+                        <td>{{user_shift.wednesday_evening}}</td>
+                        <td>{{user_shift.thursday_evening}}</td>
+                        <td>{{user_shift.friday_evening}}</td>
+                        <td>{{user_shift.saturday_evening}}</td>
+                        
+                    </tr>
+
+                    <tr class ="text-center" >
+                        <th scope="row">Night</th>
+                        <td>{{user_shift.sunday_night}}</td>
+                        <td>{{user_shift.monday_night}}</td>
+                        <td>{{user_shift.tuesday_night}}</td>
+                        <td>{{user_shift.wednesday_night}}</td>
+                        <td>{{user_shift.thursday_night}}</td>
+                        <td>{{user_shift.friday_night}}</td>
+                        <td>{{user_shift.saturday_night}}</td>
+                        
+                    </tr>
+                    
+                    
+                </tbody>
+            </table>         
+
+                <div class="d-flex justify-content-center" >
+
+                    <a class="btn btn-primary" href="{% url 'Shifts:addshifts' %}" role="button">Change</a>
+
+                </div>
+
+        </div>
 
 {% endblock %}
