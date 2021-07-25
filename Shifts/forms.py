@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import shiftSubmitTwo, weekly_schedule
-from .consts import DAYS_OF_WEEK, TYPE_OF_SHIFTS,MIN_VAL_SHIFT,MAX_VAL_SHIFT
+from .consts import DAYS_OF_WEEK, TYPE_OF_SHIFTS,MIN_VAL_SHIFT,MAX_VAL_SHIFT,SUBMIT_CHOICES 
 
 # class NewShiftForm(forms.Form):
 #     sunday=forms.IntegerField(label="Sunday",min_value=0,max_value=3)
@@ -21,9 +21,9 @@ class shiftSubmitTwoForm(ModelForm):
         widgets = {}
         for day in DAYS_OF_WEEK:
             for shift_type in TYPE_OF_SHIFTS:
-                widgets[f"{day}_{shift_type}"] = forms.NumberInput(
-                    attrs={
-                        "class": "form-control",    #for bootstrap 
+                widgets[f"{day}_{shift_type}"] = forms.Select(
+                    choices=SUBMIT_CHOICES,attrs={
+                        "class": "form-control-sm",    #for bootstrap 
                         'min' :MIN_VAL_SHIFT,           #validators
                         'max': MAX_VAL_SHIFT
                         }

@@ -1,4 +1,4 @@
-from .consts import DAYS_OF_WEEK, SHIFTS_HOURS_REG, SHIFTS_HOURS_REG_UNDERSCORE, SHIFTS_HOURS_WEEKENDS, SHIFTS_HOURS_WEEKENDS_UNDERSCORE,TYPE_OF_SHIFTS,MIN_VAL_SHIFT,MAX_VAL_SHIFT
+from .consts import DAYS_OF_WEEK, SHIFTS_HOURS_REG, SHIFTS_HOURS_REG_UNDERSCORE, SHIFTS_HOURS_WEEKENDS, SHIFTS_HOURS_WEEKENDS_UNDERSCORE,TYPE_OF_SHIFTS,MIN_VAL_SHIFT,MAX_VAL_SHIFT,SUBMIT_CHOICES 
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
@@ -9,7 +9,7 @@ from django.conf import settings
 
 
 class shiftSubmitTwo(models.Model):
- 
+    
 
     # on deletetion of user his shifts should remain in the database
     user_name = models.ForeignKey(
@@ -17,6 +17,8 @@ class shiftSubmitTwo(models.Model):
         related_name="shift_submitter",
         on_delete=models.DO_NOTHING,
     )
+
+    
 
     # creating the integerfield of availability of the shifts form user
     for day in DAYS_OF_WEEK:
@@ -26,14 +28,14 @@ class shiftSubmitTwo(models.Model):
             for shift_type,shift_hour in zip(TYPE_OF_SHIFTS,SHIFTS_HOURS_WEEKENDS  ) :
 
                 exec(
-                    f'{day}_{shift_type} = models.IntegerField(verbose_name =f"{day} {shift_type} {shift_hour}" ,default=0 ,validators=[MinValueValidator(MIN_VAL_SHIFT),MaxValueValidator(MAX_VAL_SHIFT)])'
+                    f'{day}_{shift_type} = models.IntegerField(verbose_name =f"{day} {shift_type} {shift_hour}" ,default=0, choices=SUBMIT_CHOICES ,validators=[MinValueValidator(MIN_VAL_SHIFT),MaxValueValidator(MAX_VAL_SHIFT)])'
                 )
                 
         else:
             for shift_type,shift_hour in zip(TYPE_OF_SHIFTS,SHIFTS_HOURS_REG ) :
 
                 exec(
-                    f'{day}_{shift_type} = models.IntegerField(verbose_name =f"{day} {shift_type} {shift_hour}" ,default=0 ,validators=[MinValueValidator(MIN_VAL_SHIFT),MaxValueValidator(MAX_VAL_SHIFT)])'
+                    f'{day}_{shift_type} = models.IntegerField(verbose_name =f"{day} {shift_type} {shift_hour}" ,default=0 , choices=SUBMIT_CHOICES ,validators=[MinValueValidator(MIN_VAL_SHIFT),MaxValueValidator(MAX_VAL_SHIFT)])'
                 )    
          
 

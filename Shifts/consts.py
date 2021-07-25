@@ -20,4 +20,12 @@ SHIFTS_HOURS_WEEKENDS_UNDERSCORE  = ["3pm_11pm" , "11pm_7am" ]
 
 # values for availability
 MIN_VAL_SHIFT = 0
-MAX_VAL_SHIFT = 3
+MAX_VAL_SHIFT = 2
+
+
+#submit choises
+SUBMIT_CHOICES = [
+    (0 , '0 - Not available'),
+    (1 , '1 - Available'),
+    (2 , '2 - Preferred ')
+]
