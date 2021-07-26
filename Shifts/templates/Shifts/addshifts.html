@@ -5,34 +5,16 @@
 
     <div class="container-sm bg-light justify-content-center  border border-top-0  rounded mx-auto mb-2  " style="max-width: 800px; border-color: #feac33 !important;">
        
-   
+    {% load static %}
+    <script src="{% static 'func_const.js' %}"></script>   
 
     
     <script>
         
-        const DAYS =[
-             "Sunday",
-             "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
-              ]
-              
-        
-        
-       //takes dayIndex from sunday(0) to saturday(6)
-        function nextDate(dayIndex) {
-            var today = new Date();
-            today.setDate(today.getDate() + (dayIndex - 1 - today.getDay() + 7) % 7 + 1);
-            return today;
-        }
-
         //displays date for next week
         document.addEventListener("DOMContentLoaded",()=>{
-            var next_week = nextDate(0);
-            //var nextWeekFrom = new Date(date.setDate(nextWeekStart));
+            var next_week = nextDate(0); //function from func_conts.js
+           
             for (let i = 0; i < DAYS.length; ++i) { 
              
                

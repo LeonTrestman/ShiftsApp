@@ -1,9 +1,31 @@
 {% extends "Shifts/layout.html" %}
 
+
 {% block body %}   
+
+
+    {% load static %}
+    <script src="{% static 'func_const.js' %}"></script>   
+
+
+    <script> 
+            
+            document.addEventListener("DOMContentLoaded",()=>{
+                var next_week =nextDate(0);
+                
+                for (i =0; i <DAYS.length ;++i){
+                    document.getElementById(`date${i}`).innerHTML = next_week.toLocaleString('he-IL',{ month: 'numeric', day: 'numeric'});
+                    next_week.setDate(next_week.getDate() + 1);
+                    }
+                }
+            )  
+
+    </script>
+
 
    <div class="container-sm bg-light px-0  pb-2   border border-top-0 rounded  mb-2  " style="max-width: 800px; border-color: #feac33 !important;"> 
 
+    
 
         <!-- to do : add date to each day-->
 
@@ -11,14 +33,13 @@
             <table class="table align-middle" style=" border-color: #feac33 !important;">
                 <thead class= "text-center" style=" color: white; background-color: #feac33 ;">
                     <th scope="col"><br></th>
-                    <th scope="col">Sunday <br> 17.2</th>
-                    <th scope="col">Monday</th>
-                    <th scope="col">Tuesday</th>
-                    <th scope="col">Wednesday</th>
-                    <th scope="col">Thursday</th>
-
-                    <th scope="col">Friday</th>
-                    <th scope="col">Saturday</th>
+                    <th scope="col">Sunday <br> <div id="date0"> date</div> </th>
+                    <th scope="col">Monday <br> <div id="date1"> date</div> </th>
+                    <th scope="col">Tuesday <br> <div id="date2"> date</div> </th>
+                    <th scope="col">Wednesday <br> <div id="date3"> date</div> </th>
+                    <th scope="col">Thursday <br> <div id="date4"> date</div> </th>
+                    <th scope="col">Friday <br> <div id="date5"> date</div> </th>
+                    <th scope="col">Saturday <br> <div id="date6"> date</div> </th>
                     
                     </tr>
                 </thead>
