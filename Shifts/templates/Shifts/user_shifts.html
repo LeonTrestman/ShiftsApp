@@ -2,32 +2,52 @@
 
 {% block body %}            
 
- <div class="container-sm bg-light justify-content-center  border border-top-0  rounded mx-auto mb-2  " style="max-width: 800px; border-color: #feac33 !important;"> 
+   <div class="container-sm bg-light px-0  pb-2   border border-top-0 rounded  mb-2  " style="max-width: 800px; border-color: #feac33 !important;"> 
     
-
+           {% for user_shift in shift %} <!--loop all shifts-->
+                              
+               <div class="table-responsive">
+                    <table class="table align-middle" style=" border-color: #feac33 !important;">
+                         <thead class= "text-center" style=" color: white; background-color: #feac33 ;">
+                              <thead class= "text-center" style=" color: white; background-color: #feac33 ;">
+                                   <th scope="col"><br>{{user_shift.created_at|date:"D d M Y"}}</th>
+                                   <th scope="col">Sunday  </th>
+                                   <th scope="col">Monday   </th>
+                                   <th scope="col">Tuesday   </th>
+                                   <th scope="col">Wednesday  </th>
+                                   <th scope="col">Thursday   </th>
+                                   <th scope="col">Friday  </th>
+                                   <th scope="col">Saturday </th>
+                                   
+                                   </tr>
+                              </thead>
+                         <tbody>
+                              <tr class ="text-center "  >
+                              <th scope="row "  >Evening <br> 15:00-23:00</th>
+                              <td >{{user_shift.sunday_evening}}</td>
+                              <td>{{user_shift.monday_evening}}</td>
+                              <td>{{user_shift.tuesday_evening}}</td>
+                              <td>{{user_shift.wednesday_evening}}</td>
+                              <td>{{user_shift.thursday_evening}}</td>
+                              <td>{{user_shift.friday_evening}}</td>
+                              <td>{{user_shift.saturday_evening}}</td>
+                              
+                              </tr>
+                              <tr class ="text-center" >
+                              <th scope="row">Night <br> 23:00-7:00</th>
+                              <td>{{user_shift.sunday_night}}</td>
+                              <td>{{user_shift.monday_night}}</td>
+                              <td>{{user_shift.tuesday_night}}</td>
+                              <td>{{user_shift.wednesday_night}}</td>
+                              <td>{{user_shift.thursday_night}}</td>
+                              <td>{{user_shift.friday_night}}</td>
+                              <td>{{user_shift.saturday_night}}</td>
+                              
+                              </tr>
                     
-     <div class="row ">
-          {% for field in shift %}   
-
-          {% if "evening" in field.label %}
-               <div class="col-sm-12 p-1 mx-auto border-bottom  " style=" border-color: #feac33 !important;">
-                    <p class="text-center h4 fst-italic " id="{{field.label}}"  style="color:#fdae38 ;"> Date</p>
-               </div>   
-          {% endif %}
-
-          <div class="col-sm-6 d-flex py-2  border-bottom  " style=" border-color: #feac33 !important;">
-               <div class="col-sm-6 px-3 fw-bolder text-center text-dark   mx-auto " >
-                    {{ field.label }}
-                    
-               </div>
-
-               <div class="col-sm-4 px-2 py-1 mx-auto ">
-                    {{ field }}
-               </div>
-                    
-          </div>
+                         </tbody>
+                    </table>         
           {% endfor %}
      </div>
- </div>
 
 {% endblock %}

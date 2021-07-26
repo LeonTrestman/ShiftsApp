@@ -64,8 +64,8 @@ class shiftSubmitTwo(models.Model):
     def day_date(self,dayindex):
         day = self.created_at.replace(hour=0, minute=0, second=0, microsecond=0) #get created date and reset time
         ## get the date of the following day index of the creation date
-        day-= timedelta(days=(day.weekday() + 1) % 7) # for a week that starts on a Sunday
-        day +=timedelta(days=7+dayindex )  #adding the following week with dayindex
+        day -= timedelta(days=(day.weekday() + 1) % 7) # for a week that starts on a Sunday
+        day += timedelta(days=7+dayindex )  #adding the following week with dayindex
         return day
 
 
