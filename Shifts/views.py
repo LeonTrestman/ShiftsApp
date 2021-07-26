@@ -168,8 +168,12 @@ def user_shifts(request, user_name, up_to_days_ago=None):
             user_name=f"{uid.id}"# filter with id of user
         ).order_by('-created_at')  #oreder by the newest
 
+
+    context = {"shifts": user_shift_result}
+   
+
     return render(
         request,
         "Shifts/user_shifts.html",
-        {"shift": user_shift_result, "user_name": user_name},
+        context
     )

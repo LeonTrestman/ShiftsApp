@@ -4,13 +4,13 @@
 
    <div class="container-sm bg-light px-0  pb-2   border border-top-0 rounded  mb-2  " style="max-width: 800px; border-color: #feac33 !important;"> 
     
-           {% for user_shift in shift %} <!--loop all shifts-->
+           {% for user_shift in shifts %} <!--loop all shifts-->
                               
                <div class="table-responsive">
                     <table class="table align-middle" style=" border-color: #feac33 !important;">
                          <thead class= "text-center" style=" color: white; background-color: #feac33 ;">
                               <thead class= "text-center" style=" color: white; background-color: #feac33 ;">
-                                   <th scope="col">{{user_shift.created_at|date:"D d M Y"}}</th>
+                                   <th scope="col">Created at : {{user_shift.created_at| date:"j/n"}}</th>
                                    <th scope="col">Sunday  </th>
                                    <th scope="col">Monday   </th>
                                    <th scope="col">Tuesday   </th>
