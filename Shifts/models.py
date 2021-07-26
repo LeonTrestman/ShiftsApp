@@ -1,3 +1,4 @@
+from datetime import timedelta
 from .consts import DAYS_OF_WEEK, SHIFTS_HOURS_REG, SHIFTS_HOURS_REG_UNDERSCORE, SHIFTS_HOURS_WEEKENDS, SHIFTS_HOURS_WEEKENDS_UNDERSCORE,TYPE_OF_SHIFTS,MIN_VAL_SHIFT,MAX_VAL_SHIFT,SUBMIT_CHOICES 
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -57,6 +58,15 @@ class shiftSubmitTwo(models.Model):
                    created_at: {self.created_at.strftime("%d/%m/%Y , %H:%M:%S")}
                    updated_at: {self.updated_at.strftime("%d/%m/%Y , %H:%M:%S")}
                                                                              """
+
+    #returns the date of dayindex in the following week of the creation of the model
+    #0 for the following sunday up to 6 for saturday
+    def day_date(self,dayindex):
+        day = self.created_at.replace(hour=0, minute=0, second=0, microsecond=0) #get created date and reset time
+        ## get the date of the following day index of the creation date
+        day-= timedelta(days=(day.weekday() + 1) % 7) # for a week that starts on a Sunday
+        day +=timedelta(days=7+dayindex )  #adding the following week with dayindex
+        return day
 
 
 # model for weekly assigments of users to shifts

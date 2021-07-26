@@ -77,7 +77,7 @@ def add_shifts(request):
             messages.error(request,"Error,Form isn't valid")
             
 
-
+    
     return render(request, "Shifts/addshifts.html", {"form": form})
 
 
@@ -96,6 +96,12 @@ def get_weekly_user_shifts(request):
     ).last()
 
 
+#addeds to context all days of week to pass
+def add_weekdays_to_context(context, model):
+    for i in range(0,7):
+        context[f"date{i}"] = model.day_date(i)
+
+
 # shows user weekly shift if available, otherwise redirects to adding shift
 @login_required()
 def myweekshift(request):
@@ -105,8 +111,9 @@ def myweekshift(request):
         # msg of error no shift schedule
         messages.error(request, f"{request.user} has no weekly shifts schedule.")
         return redirect("Shifts:addshifts")
-
-    return render(request, "Shifts/myweekshift.html", {"user_shift": user_shift_result})
+    context = {"user_shift": user_shift_result}
+    add_weekdays_to_context (context,user_shift_result)
+    return render(request, "Shifts/myweekshift.html", context)
 
 
 # all Shifts display for staff
