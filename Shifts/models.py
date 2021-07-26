@@ -1,26 +1,45 @@
 from datetime import timedelta
+from django.utils import timezone
 from .consts import DAYS_OF_WEEK, SHIFTS_HOURS_REG, SHIFTS_HOURS_REG_UNDERSCORE, SHIFTS_HOURS_WEEKENDS, SHIFTS_HOURS_WEEKENDS_UNDERSCORE,TYPE_OF_SHIFTS,MIN_VAL_SHIFT,MAX_VAL_SHIFT,SUBMIT_CHOICES 
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
 
+class WeeklyDayDates(models.Model):
+
+    #returns the date of dayindex in the following week of the creation of the model\
+    #0 for the following sunday up to 6 for saturday
+    def day_date(dayindex):
+        day = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0) #get created date and reset time
+        # get the date of the following day index of the creation date
+        day -= timedelta(days=(day.weekday() + 1) % 7) # for a week that starts on a Sunday
+        day += timedelta(days=7+dayindex )  #adding the following week with dayindex
+        return day
+
+
+    for day,i in zip(DAYS_OF_WEEK,range (len(DAYS_OF_WEEK))):
+        exec (f'{day}_date = models.DateField( default= day_date({i}) ) ')
+    # sunday_date = models.DateField( default= day_date(0) )
+    # monday_date = models.DateField( default= day_date(1) )
+    
+    
+
+
+
 
 # model for user availability for shifts
 # this model has 2 shifts for each day in a week
+class WeeklyUserSchedule(models.Model):
 
-
-class shiftSubmitTwo(models.Model):
-    
-
+    #keeps data on day dates
+    WeeklyDayDates = models.ForeignKey(WeeklyDayDates, related_name="day_shifts" , on_delete=models.CASCADE)
     # on deletetion of user his shifts should remain in the database
     user_name = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name="shift_submitter",
         on_delete=models.DO_NOTHING,
     )
-
-    
-
+   
     # creating the integerfield of availability of the shifts form user
     for day in DAYS_OF_WEEK:
         
@@ -40,8 +59,7 @@ class shiftSubmitTwo(models.Model):
                 )    
          
 
-            
-
+        
     # datefields
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -71,7 +89,7 @@ class shiftSubmitTwo(models.Model):
 
 # model for weekly assigments of users to shifts
 # this model has 2 shifts each day
-class weekly_schedule(models.Model):
+class WeeklySchedule(models.Model):
     # creating field for user placment for each shift
     for day in DAYS_OF_WEEK:
         for shift_type in TYPE_OF_SHIFTS:
