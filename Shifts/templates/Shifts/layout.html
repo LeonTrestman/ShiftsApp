@@ -21,15 +21,15 @@
     <ul class="navbar-nav">
 
       <li class="nav-item px-3 ">
-        <a class="nav-link active " href="{% url 'Shifts:index' %}" style="font-size: larger;">Home</a>
+        <a class="nav-link active " href="{% url 'Shifts:Weekly_schedules' %}" style="font-size: larger;">Weekly schedules</a>
       </li>
 
-      <li class="nav-item px-3">
-        <a class="nav-link active" href="{% url 'Shifts:addshifts' %}" style="font-size: larger;">Add Shifts</a>
-      </li>
+      {% comment %} <li class="nav-item px-3">
+        <a class="nav-link active" href="{% url 'Shifts:addshifts' %}" style="font-size: larger;">Change schedule</a>
+      </li> {% endcomment %}
 
       <li class="nav-item px-3">
-        <a class="nav-link active" href="{% url 'Shifts:my_weeks_shift' %}" style="font-size: larger;">My Shift</a>
+        <a class="nav-link active" href="{% url 'Shifts:my_weekly_schedule' %}" style="font-size: larger;">My schedule</a>
       </li>
 
       <!-- logout appear only if request logged index -->

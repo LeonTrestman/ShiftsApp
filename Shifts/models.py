@@ -38,7 +38,7 @@ class WeeklyDayDates(models.Model):
 class WeeklyUserSchedule(models.Model):
 
     #keeps data on day dates
-    WeeklyDayDates = models.ForeignKey(WeeklyDayDates, related_name="day_shifts" , on_delete=models.CASCADE)
+    WeeklyDayDates = models.ForeignKey(WeeklyDayDates, related_name="UserSchedule" , on_delete=models.CASCADE)
     # on deletetion of user his shifts should remain in the database
     user_name = models.ForeignKey(
         settings.AUTH_USER_MODEL,

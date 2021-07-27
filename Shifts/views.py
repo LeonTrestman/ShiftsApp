@@ -128,7 +128,7 @@ def add_weekdays_to_context_form(context, form):
 
 # shows user weekly shift if available, otherwise redirects to adding shift
 @login_required()
-def myweekshift(request):
+def my_schedule(request):
     user_shift_result = get_WeeklyUserSchedule(request)
     # if weekly shift from user doesn't exist redireact to add shift
     if user_shift_result == None:
@@ -137,8 +137,23 @@ def myweekshift(request):
         return redirect("Shifts:addshifts")
     context = {"user_shift": user_shift_result}
     add_weekdays_to_context_model (context,user_shift_result)
-    return render(request, "Shifts/myweekshift.html", context)
+    return render(request, "Shifts/myschedule.html", context)
 
+# shows user all weekly shift schedules for the week
+########add weeks ago
+@login_required()
+def Weekly_schedules(request , week_ago= None):
+    week_start= calc_next_week()
+    Weekly_schedules_res = WeeklyDayDates.objects.filter(sunday_date = week_start).last()
+    Weekly_schedules_res = Weekly_schedules_res.UserSchedule.all()
+
+    context = {"Weekly_schedules": Weekly_schedules_res}
+   
+    return render(
+        request,
+        "Shifts/weeklyschedules.html",
+        context
+    )
 
 # all Shifts display for staff
 # optional pass up to days ago to get all shifts up to x days ago from now
