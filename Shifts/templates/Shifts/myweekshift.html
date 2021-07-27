@@ -6,54 +6,64 @@
 
 
    <div class="container-sm bg-light px-0  pb-2   border border-top-0 rounded  mb-2  " style="max-width: 800px; border-color: #feac33 !important;"> 
-        <div class="table-responsive">
-            <table class="table align-middle" style=" border-color: #feac33 !important;">
-                <thead class= "text-center" style=" color: white; background-color: #feac33 ;">
-                    <th scope="col"><br></th>
-                    <th scope="col">Sunday <br> {{ date0| date:"j/n" }} </th>
-                    <th scope="col">Monday <br> {{ date1| date:"j/n" }}  </th>
-                    <th scope="col">Tuesday <br> {{ date2| date:"j/n" }}  </th>
-                    <th scope="col">Wednesday <br> {{ date3| date:"j/n" }} </th>
-                    <th scope="col">Thursday <br> {{ date4| date:"j/n" }}  </th>
-                    <th scope="col">Friday <br> {{ date5| date:"j/n" }} </th>
-                    <th scope="col">Saturday <br> {{ date6| date:"j/n" }}  </th>
+            <div class="table-responsive">
+                 <table class="table align-middle" style=" border-color: #feac33 !important;">
+                         <thead class= "text-center" style=" color: white; ">
+                              <thead class= "text-center" style=" color: white; background-color: #feac33 ;">
+                                   <th scope="col" > <p class="align-middle text-dark "> {{user_shift.user_name}}</p></th>
+                                   <th scope="col">Sunday <br> {{ user_shift.WeeklyDayDates.sunday_date | date:"j/n" }} </th>
+                                   <th scope="col">Monday <br> {{ user_shift.WeeklyDayDates.monday_date | date:"j/n" }}  </th>
+                                   <th scope="col">Tuesday <br> {{ user_shift.WeeklyDayDates.tuesday_date| date:"j/n" }}  </th>
+                                   <th scope="col">Wednesday <br> {{ user_shift.WeeklyDayDates.wednesday_date| date:"j/n" }} </th>
+                                   <th scope="col">Thursday <br> {{ user_shift.WeeklyDayDates.thursday_date| date:"j/n" }}  </th>
+                                   <th scope="col">Friday <br> {{ user_shift.WeeklyDayDates.friday_date| date:"j/n" }} </th>
+                                   <th scope="col">Saturday <br> {{ user_shift.WeeklyDayDates.saturday_date| date:"j/n" }}  </th>
+                                             
+                              </thead>
+                         <tbody>
+                              <tr class ="text-center "  >
+                              <th scope="row "  >Evening </th>
+                              <td data-bs-toggle="tooltip" data-bs-placement="bottom" title="16:00-23:00">{{user_shift.sunday_evening}}</td>
+                              <td data-bs-toggle="tooltip" data-bs-placement="bottom" title="16:00-23:00">{{user_shift.monday_evening}}</td>
+                              <td data-bs-toggle="tooltip" data-bs-placement="bottom" title="16:00-23:00">{{user_shift.tuesday_evening}}</td>
+                              <td data-bs-toggle="tooltip" data-bs-placement="bottom" title="16:00-23:00">{{user_shift.wednesday_evening}}</td>
+                              <td data-bs-toggle="tooltip" data-bs-placement="bottom" title="16:00-23:00">{{user_shift.thursday_evening}}</td>
+                              <td data-bs-toggle="tooltip" data-bs-placement="bottom" title="15:00-23:00">{{user_shift.friday_evening}}</td>
+                              <td data-bs-toggle="tooltip" data-bs-placement="bottom" title="15:00-23:00"> {{user_shift.saturday_evening}}</td>
+                              
+                              </tr>
+                              <tr class ="text-center" >
+                              <th scope="row">Night </th>
+                              <td  data-bs-toggle="tooltip" data-bs-placement="bottom" title="23:00-7:00">{{user_shift.sunday_night}}</td>
+                              <td  data-bs-toggle="tooltip" data-bs-placement="bottom" title="23:00-7:00">{{user_shift.monday_night}}</td>
+                              <td  data-bs-toggle="tooltip" data-bs-placement="bottom" title="23:00-7:00">{{user_shift.tuesday_night}}</td>
+                              <td  data-bs-toggle="tooltip" data-bs-placement="bottom" title="23:00-7:00">{{user_shift.wednesday_night}}</td>
+                              <td  data-bs-toggle="tooltip" data-bs-placement="bottom" title="23:00-7:00">{{user_shift.thursday_night}}</td>
+                              <td  data-bs-toggle="tooltip" data-bs-placement="bottom" title="23:00-7:00">{{user_shift.friday_night}}</td>
+                              <td  data-bs-toggle="tooltip" data-bs-placement="bottom" title="23:00-7:00">{{user_shift.saturday_night}}</td>
+                              
+                              </tr>
                     
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class ="text-center "  >
-                        <th scope="row "  >Evening <br> 15:00-23:00</th>
-                        <td >{{user_shift.sunday_evening}}</td>
-                        <td>{{user_shift.monday_evening}}</td>
-                        <td>{{user_shift.tuesday_evening}}</td>
-                        <td>{{user_shift.wednesday_evening}}</td>
-                        <td>{{user_shift.thursday_evening}}</td>
-                        <td>{{user_shift.friday_evening}}</td>
-                        <td>{{user_shift.saturday_evening}}</td>
-                        
-                    </tr>
-                    <tr class ="text-center" >
-                        <th scope="row">Night <br> 23:00-7:00</th>
-                        <td>{{user_shift.sunday_night}}</td>
-                        <td>{{user_shift.monday_night}}</td>
-                        <td>{{user_shift.tuesday_night}}</td>
-                        <td>{{user_shift.wednesday_night}}</td>
-                        <td>{{user_shift.thursday_night}}</td>
-                        <td>{{user_shift.friday_night}}</td>
-                        <td>{{user_shift.saturday_night}}</td>
-                        
-                    </tr>
+                         </tbody>
+                    </table>      
+            </div>
             
-                </tbody>
-            </table>         
-        
-              
-                <div class="d-flex justify-content-center" >
+            <div class="d-flex justify-content-center" >
 
-                    <a class="btn btn-primary" href="{% url 'Shifts:addshifts' %}" role="button">Change</a>
+                <a class="btn btn-primary" href="{% url 'Shifts:addshifts' %}" role="button">Change</a>
 
-                </div>
+            </div>
 
-        </div>
+    </div>
 
+
+    
+     <!-- bootstrap tool tip -->
+     <script>
+          var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+          var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+          })
+     </script>
+     
 {% endblock %}
