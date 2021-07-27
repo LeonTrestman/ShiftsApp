@@ -14,11 +14,10 @@ from .consts import DAYS_OF_WEEK, TYPE_OF_SHIFTS,MIN_VAL_SHIFT,MAX_VAL_SHIFT,SUB
 #     friday=forms.IntegerField(label="friday",min_value=0,max_value=3)
 #     saturday=forms.IntegerField(label="saturday",min_value=0,max_value=3)
 
-
 class WeeklyUserScheduleForm(ModelForm):
     class Meta:
         model = WeeklyUserSchedule
-        exclude = ["user_name" , "WeeklyDayDates"]
+        exclude = ["user_name" ,"WeeklyDayDates" ]
 
         widgets = {}
         for day in DAYS_OF_WEEK:
@@ -37,7 +36,7 @@ class WeeklyUserScheduleForm(ModelForm):
         day -= timedelta(days=(day.weekday() + 1) % 7) # for a week that starts on a Sunday
         day += timedelta(days=7+dayindex )  #adding the following week with dayindex
         return day
-    
+
 
 class weekly_schedule_Form(ModelForm):
     class Meta:

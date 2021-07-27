@@ -19,8 +19,14 @@ class WeeklyDayDates(models.Model):
 
     for day,i in zip(DAYS_OF_WEEK,range (len(DAYS_OF_WEEK))):
         exec (f'{day}_date = models.DateField( default= day_date({i}) ) ')
-    # sunday_date = models.DateField( default= day_date(0) )
-    # monday_date = models.DateField( default= day_date(1) )
+    
+    #   exemple:
+    #  sunday_date = models.DateField( default= day_date(0) )
+
+    #add editable=False
+    #add str to view 
+    
+    
     
     
 

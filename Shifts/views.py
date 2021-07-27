@@ -52,24 +52,38 @@ def logout_view(request):
 @login_required()
 def add_shifts(request):
 
-    weekly_user_shift = get_weekly_user_shifts(request) #get 
-    WeeklyDayDates = get_next_week_WeeklyDayDates(request) #########stopped
+    WeeklyUserSchedule = get_WeeklyUserSchedule(request) 
+
+
     # if weekly shift from user doesn't exist create a new form
-    if weekly_user_shift == None:
+    if WeeklyUserSchedule == None:
         form = WeeklyUserScheduleForm()
+        
     # update the weekly shifts values
     else:
-        form = WeeklyUserScheduleForm(instance=weekly_user_shift)
+        form = WeeklyUserScheduleForm(instance=WeeklyUserSchedule)
+
 
     if request.method == "POST":
+
+        ##handling creation or fatching the next week WeeklyDayDates
+        Weekly_Day_Dates = get_next_week_WeeklyDayDates(request)# get next week WeeklyDayDates
+        #create one if WeeklyDayDates not exsits
+        if not Weekly_Day_Dates : 
+            Weekly_Day_Dates = WeeklyDayDates()
+            Weekly_Day_Dates.save()
+
+
         #changes  the last week shifts (creates or updates)
-        form = WeeklyUserScheduleForm(request.POST, instance=weekly_user_shift)
+        form = WeeklyUserScheduleForm(request.POST, instance=WeeklyUserSchedule)
         if form.is_valid():
             # adding authenticed user into the model
             # login is required so user always not null
             shift_submit = form.save(commit=False)
             shift_submit.user_name = request.user
+            shift_submit.WeeklyDayDates = Weekly_Day_Dates
             shift_submit.save()
+            
             messages.success(request, 'Shift schedule have been changed.')
             
         ######################################################
@@ -87,11 +101,11 @@ def add_shifts(request):
 def get_next_week_WeeklyDayDates(request):
     return WeeklyDayDates.objects.filter(
         sunday_date=calc_next_week() #for the next week synday
-    )
+    ).last()
 
 
 # returns user weekly shift from the database
-def get_weekly_user_shifts(request):
+def get_WeeklyUserSchedule(request):
     week_start = calc_start_week()
     week_end = calc_next_week()
     print (week_end)
@@ -115,7 +129,7 @@ def add_weekdays_to_context_form(context, form):
 # shows user weekly shift if available, otherwise redirects to adding shift
 @login_required()
 def myweekshift(request):
-    user_shift_result = get_weekly_user_shifts(request)
+    user_shift_result = get_WeeklyUserSchedule(request)
     # if weekly shift from user doesn't exist redireact to add shift
     if user_shift_result == None:
         # msg of error no shift schedule
