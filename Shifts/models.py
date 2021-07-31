@@ -18,14 +18,11 @@ class WeeklyDayDates(models.Model):
 
 
     for day,i in zip(DAYS_OF_WEEK,range (len(DAYS_OF_WEEK))):
-        exec (f'{day}_date = models.DateField( default= day_date({i}) ) ')
+        exec (f'{day}_date = models.DateField( default= day_date({i}), editable=False ) ') #not editable
     
     #   exemple:
     #  sunday_date = models.DateField( default= day_date(0) )
 
-    #add editable=False
-    #add str to view 
-    
     def __str__(self) :
         return f"""
                    sunday: {self.sunday_date.strftime("%d/%m")}
