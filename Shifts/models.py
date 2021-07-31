@@ -26,10 +26,15 @@ class WeeklyDayDates(models.Model):
     #add editable=False
     #add str to view 
     
-    
-    
-    
-
+    def __str__(self) :
+        return f"""
+                   sunday: {self.sunday_date.strftime("%d/%m")}
+                   monday: {self.monday_date.strftime("%d/%m")} 
+                   tuesday: {self.tuesday_date.strftime("%d/%m")} 
+                   wednesday: {self.wednesday_date.strftime("%d/%m")}
+                   thursday: {self.friday_date.strftime("%d/%m")} 
+                   saturday: {self.saturday_date.strftime("%d/%m")} 
+                                                       """
 
 
 
@@ -77,7 +82,7 @@ class WeeklyUserSchedule(models.Model):
                    monday: {self.monday_evening} ,{self.monday_night}
                    tuesday: {self.tuesday_evening} ,{self.tuesday_night}
                    wednesday: {self.wednesday_evening} ,{self.thursday_night}
-                   thursday: {self. friday_evening} ,{self. friday_night}
+                   thursday: {self.friday_evening} ,{self.friday_night}
                    saturday: {self.saturday_evening} ,{self.saturday_night}
                    created_at: {self.created_at.strftime("%d/%m/%Y , %H:%M:%S")}
                    updated_at: {self.updated_at.strftime("%d/%m/%Y , %H:%M:%S")}
@@ -114,7 +119,7 @@ class WeeklySchedule(models.Model):
                    monday: {self.monday_evening_user} ,{self.monday_night_user} 
                    tuesday: {self.tuesday_evening_user} ,{self.tuesday_night_user} 
                    wednesday: {self.wednesday_evening_user} ,{self.thursday_night_user}
-                   thursday: {self. friday_evening_user} ,{self. friday_night_user}
+                   thursday: {self.friday_evening_user} ,{self.friday_night_user}
                    saturday: {self.saturday_evening_user} ,{self.saturday_night_user}
                    created_at: {self.created_at.strftime("%d/%m/%Y , %H:%M:%S")}
                    updated_at: {self.updated_at.strftime("%d/%m/%Y , %H:%M:%S")}
